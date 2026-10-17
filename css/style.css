@@ -3,6 +3,21 @@
     --page-bg-dark-theme: #1e1e22;
     --main-color:#0be97a;
     --border-color:#0be97a9d;
+
+    --accent-gold: #d7b879;
+    --accent-dark: #18253a;
+
+    --vip-color: #c6a15b;
+    --premium-color: #6688c5;
+    --standard-color: #55a58d;
+    --economy-color: #9d87c1;
+
+    --available-color: #e9edf3;
+    --inspected-color: #f3c969;
+    --cart-color: #55a58d;
+    --unavailable-color: #aeb5c0;
+    
+
 }
 *{
     margin:0;
@@ -14,6 +29,7 @@ body {
     background-color: var(--page-bg-light-theme);
     color: #f5f5f7;
     font-family: Arial, Helvetica, sans-serif;
+
 }
 .site-header{
     width: 100%;
@@ -24,6 +40,7 @@ body {
     align-items: center;
     justify-content: space-between;
     background-color: #08080a;
+
 }
 
 

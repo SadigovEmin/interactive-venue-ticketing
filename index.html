@@ -7,6 +7,7 @@
     <link rel="icon" type="image/x-icon" href="./assets/et-favicon.png">
 
     <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/main.css" />
     <script src="js/venue-data.js" defer></script>
   </head>
   <body>
@@ -122,13 +123,189 @@
             <circle cx="12" cy="8" r="4"></circle>
             <path d="M4 21v-2a8 8 0 0 1 16 0v2"></path>
           </svg>
-          <span>Daxil Ol</span>
+          <span>Login In</span>
         </a>
       </nav>
     </header>
 
-    <main></main>
+    
+<main class="ticketing-main">
+    <section class="event-intro" aria-labelledby="event-title">
+        <div>
+            <p class="eyebrow">TICKETS COME TO YOUR DOOR NOW</p>
+            <h1 id="event-title">Emin's Talks</h1>
+            <p class="event-description">
+                Find your perfect seat and book your tickets.
+            </p>
+        </div>
 
-    <footer></footer>
+        <div class="venue-badge">
+            <span class="status-dot"></span>
+            Seat selection
+        </div>
+    </section>
+
+    <section class="pricing-section" aria-labelledby="pricing-title">
+        <div class="section-title">
+            <div>
+                <p class="eyebrow">CHOOSE YOUR SEAT</p>
+                <h2 id="pricing-title">Seat categories</h2>
+            </div>
+            <p class="muted-text">Prices are per ticket</p>
+        </div>
+
+        <div class="price-categories">
+            <article class="price-card vip-card">
+                <span class="price-indicator"></span>
+                <div>
+                    <h3>VIP</h3>
+                    <p>Exclusive front-row seating</p>
+                </div>
+                <strong>120 AZN</strong>
+            </article>
+
+            <article class="price-card premium-card">
+                <span class="price-indicator"></span>
+                <div>
+                    <h3>Premium</h3>
+                    <p>Excellent stage views</p>
+                </div>
+                <strong>85 AZN</strong>
+            </article>
+
+            <article class="price-card standard-card">
+                <span class="price-indicator"></span>
+                <div>
+                    <h3>Standard</h3>
+                    <p>Comfortable central seating</p>
+                </div>
+                <strong>55 AZN</strong>
+            </article>
+
+            <article class="price-card economy-card">
+                <span class="price-indicator"></span>
+                <div>
+                    <h3>Economy</h3>
+                    <p>Affordable seating options</p>
+                </div>
+                <strong>30 AZN</strong>
+            </article>
+        </div>
+    </section>
+
+    <div class="booking-layout">
+
+        <section class="venue-panel" aria-labelledby="map-title">
+            <div class="panel-heading">
+                <div>
+                    <p class="eyebrow">EXPLORE THE VENUE</p>
+                    <h2 id="map-title">Select your seats</h2>
+                    <p class="muted-text">
+                        Select a seat to view its row, number and price.
+                    </p>
+                </div>
+                <span class="seat-count-label">264 seats</span>
+            </div>
+
+            <div class="map-controls" aria-label="Map navigation">
+                <button type="button" id="zoom-in">Zoom +</button>
+                <button type="button" id="zoom-out">Zoom −</button>
+                <button type="button" id="move-up">↑</button>
+                <button type="button" id="move-down">↓</button>
+                <button type="button" id="move-left">←</button>
+                <button type="button" id="move-right">→</button>
+                <button type="button" id="reset-view">Reset view</button>
+            </div>
+
+            <div class="venue-viewport" id="venue-viewport">
+                <div class="venue-map" id="venue-map">
+
+                    <div class="stage">
+                        <span>STAGE</span>
+                    </div>
+
+                    <div class="venue-sections" id="venue-sections">
+                        <!-- JavaScript will generate the sections and seats here. -->
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="seat-legend" aria-label="Seat status">
+                <span class="legend-item">
+                    <span class="legend-swatch available"></span>
+                    Available
+                </span>
+
+                <span class="legend-item">
+                    <span class="legend-swatch inspected"></span>
+                    Selected for inspection
+                </span>
+
+                <span class="legend-item">
+                    <span class="legend-swatch in-cart"></span>
+                    In cart
+                </span>
+
+                <span class="legend-item">
+                    <span class="legend-swatch unavailable"></span>
+                    Unavailable
+                </span>
+            </div>
+        </section>
+
+        <aside class="booking-sidebar">
+
+            <section class="booking-card" aria-labelledby="seat-details-title">
+                <p class="eyebrow">YOUR SELECTION</p>
+                <h2 id="seat-details-title">Seat details</h2>
+
+                <div id="seat-details" class="seat-details">
+                    <div class="selection-placeholder">
+                        <span class="placeholder-icon">⌖</span>
+                        <p>Select a seat on the map to see its details.</p>
+                    </div>
+                </div>
+
+                <button type="button" id="add-to-cart" disabled>
+                    ADD TO CART
+                </button>
+
+                <p id="selection-message" role="status" aria-live="polite"></p>
+            </section>
+
+            <section class="booking-card cart-card" aria-labelledby="cart-title">
+                <div class="cart-heading">
+                    <div>
+                        <p class="eyebrow">READY WHEN YOU ARE</p>
+                        <h2 id="cart-title">Your tickets</h2>
+                    </div>
+
+                    <span id="cart-count" class="cart-count">0 tickets</span>
+                </div>
+
+                <div id="cart-items">
+                    <div class="empty-cart">
+                        <p>Your cart is empty.</p>
+                        <span>Your selected tickets will appear here.</span>
+                    </div>
+                </div>
+
+                <div class="cart-total">
+                    <span>Total amount</span>
+                    <strong id="cart-total">0.00 AZN</strong>
+                </div>
+            </section>
+
+        </aside>
+    </div>
+</main>
+
+<footer class="site-footer">
+    <a href="#" class="footer-brand">E-<span>ticket</span></a>
+    <p>Find your seat. Make it memorable.</p>
+</footer>
+
+
   </body>
 </html>

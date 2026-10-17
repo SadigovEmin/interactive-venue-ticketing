@@ -1,0 +1,509 @@
+:root{
+    --page-bg-light-theme: #f4f5f8;
+    --page-bg-dark-theme: #1e1e22;
+    --main-color:#0be97a;
+    --border-color:#0be97a9d;
+
+    --accent-gold: #d7b879;
+    --accent-dark: #18253a;
+
+    --vip-color: #c6a15b;
+    --premium-color: #6688c5;
+    --standard-color: #55a58d;
+    --economy-color: #9d87c1;
+
+    --available-color: #e9edf3;
+    --inspected-color: #f3c969;
+    --cart-color: #55a58d;
+    --unavailable-color: #aeb5c0;
+    
+
+}
+
+
+
+body {
+    
+    color: #20232b;
+    line-height: 1.5;
+}
+
+.ticketing-main {
+    width: min(1440px, 92%);
+    margin: 0 auto;
+    padding: 42px 0 64px;
+}
+
+.ticketing-main h2,
+.ticketing-main h3,
+.ticketing-main p {
+    margin-top: 0;
+}
+
+.ticketing-main h2 {
+    margin-bottom: 6px;
+    font-size: 1.35rem;
+    color: #20232b;
+}
+
+.eyebrow {
+    margin-bottom: 8px;
+    color: #159e61;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 1.8px;
+}
+
+.muted-text,
+.event-description {
+    color: #777c88;
+    font-size: 0.9rem;
+}
+
+
+.event-intro,
+.section-title,
+.panel-heading,
+.cart-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.event-intro {
+    margin-bottom: 36px;
+}
+
+.event-intro h1 {
+    margin: 0 0 8px;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    letter-spacing: -1.2px;
+}
+
+.event-description {
+    margin-bottom: 0;
+}
+
+.venue-badge {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 10px 14px;
+    border: 1px solid #dcefe4;
+    border-radius: 30px;
+    background: #edfaf2;
+    color: #177d4d;
+    font-size: 0.82rem;
+    white-space: nowrap;
+}
+
+.status-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--main-color);
+}
+
+
+.pricing-section {
+    margin-bottom: 34px;
+}
+
+.section-title {
+    margin-bottom: 16px;
+}
+
+.section-title .muted-text {
+    margin-bottom: 0;
+}
+
+.price-categories {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.price-card {
+    display: grid;
+    grid-template-columns: 4px minmax(0, 1fr);
+    align-items: center;
+    column-gap: 13px;
+    row-gap: 12px;
+
+    padding: 17px;
+    background: #ffffff;
+    border: 1px solid #e7e9ee;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgb(20 25 40 / 3%);
+}
+
+.price-indicator {
+    grid-row: span 2;
+    width: 8px;
+    height: 48px;
+    border-radius: 4px;
+}
+
+.vip-card .price-indicator {
+    background: var(--vip-color);
+}
+
+.premium-card .price-indicator {
+    background: var(--premium-color);
+}
+
+.standard-card .price-indicator {
+    background: var(--standard-color);
+}
+
+.economy-card .price-indicator {
+    background: var(--economy-color);
+}
+
+.price-card h3 {
+    margin-bottom: 3px;
+    font-size: 0.95rem;
+}
+
+.price-card p {
+    margin-bottom: 0;
+    color: #858a96;
+    font-size: 0.76rem;
+}
+
+.price-card strong {
+    grid-column: 2;
+    font-size: 1.15rem;
+}
+
+/* Venue and booking columns */
+
+.booking-layout {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 330px;
+    align-items: start;
+    gap: 22px;
+}
+
+.venue-panel,
+.booking-card {
+    min-width: 0;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid #e7e9ee;
+    border-radius: 16px;
+    box-shadow: 0 5px 24px rgb(20 25 40 / 4%);
+}
+
+.panel-heading {
+    align-items: flex-start;
+    margin-bottom: 20px;
+}
+
+.panel-heading .muted-text {
+    margin-bottom: 0;
+}
+
+.seat-count-label,
+.cart-count {
+    padding: 6px 10px;
+    border-radius: 20px;
+    background: #f0f2f5;
+    color: #5f6674;
+    font-size: 0.75rem;
+    white-space: nowrap;
+}
+
+
+.map-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.map-controls button {
+    min-height: 36px;
+    padding: 7px 10px;
+    border: 1px solid #e0e3e9;
+    border-radius: 7px;
+    background: #ffffff;
+    color: #363b46;
+    font-size: 0.78rem;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.map-controls button:hover {
+    border-color: var(--main-color);
+    background: #effdf5;
+}
+
+.map-controls button:focus-visible,
+#add-to-cart:focus-visible {
+    outline: 3px solid #0be97a;
+    outline-offset: 3px;
+}
+
+.venue-viewport {
+    min-height: 340px;
+    overflow: auto;
+    padding: 22px;
+    border: 1px solid #e6e9ef;
+    border-radius: 12px;
+    background: #f8f9fb;
+}
+
+.venue-map {
+    min-width: 520px;
+    transform-origin: center center;
+}
+
+.stage {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    min-height: 55px;
+    margin: 0 auto 30px;
+    border-radius: 50% 50% 8px 8px / 30% 30% 8px 8px;
+    background: #20232b;
+    color: #0be97a;
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 5px;
+}
+
+.venue-sections {
+    display: grid;
+    gap: 22px;
+}
+
+.seat-legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 20px;
+    margin-top: 20px;
+}
+
+.legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    color: #6f7582;
+    font-size: 0.78rem;
+}
+
+.legend-swatch {
+    width: 13px;
+    height: 13px;
+    border: 1px solid rgb(0 0 0 / 10%);
+    border-radius: 4px;
+}
+
+.legend-swatch.available {
+    background: var(--available-color);
+}
+
+.legend-swatch.inspected {
+    background: var(--inspected-color);
+}
+
+.legend-swatch.in-cart {
+    background: var(--cart-color);
+}
+
+.legend-swatch.unavailable {
+    background: var(--unavailable-color);
+}
+
+.booking-sidebar {
+    display: grid;
+    gap: 20px;
+}
+
+.booking-card h2 {
+    margin-bottom: 18px;
+}
+
+.seat-details {
+    min-height: 115px;
+    color: #747a87;
+    font-size: 0.88rem;
+}
+
+.selection-placeholder {
+    display: grid;
+    justify-items: center;
+    gap: 10px;
+    padding: 16px 0;
+    text-align: center;
+}
+
+.selection-placeholder p {
+    margin-bottom: 0;
+}
+
+.placeholder-icon {
+    display: grid;
+    place-items: center;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background: #effdf5;
+    color: #159e61;
+    font-size: 1.5rem;
+}
+
+#add-to-cart {
+    width: 100%;
+    margin-top: 12px;
+    padding: 13px;
+    border: 0;
+    border-radius: 8px;
+    background: #0be97a;
+    color: #092819;
+    font-size: 0.8rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: background 0.2s;
+}
+
+#add-to-cart:not(:disabled):hover {
+    background: #00cf69;
+}
+
+#add-to-cart:disabled {
+    cursor: not-allowed;
+    opacity: 0.45;
+}
+
+#selection-message {
+    margin: 10px 0 0;
+    color: #777c88;
+    font-size: 0.8rem;
+}
+
+.cart-heading {
+    margin-bottom: 18px;
+}
+
+.cart-heading h2 {
+    margin-bottom: 0;
+}
+
+.empty-cart {
+    padding: 16px 0 22px;
+    color: #7c8290;
+    font-size: 0.85rem;
+}
+
+.empty-cart p {
+    margin-bottom: 5px;
+    color: #353a45;
+    font-weight: 600;
+}
+
+.empty-cart span {
+    font-size: 0.78rem;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 18px;
+    border-top: 1px solid #e7e9ee;
+    font-size: 0.9rem;
+}
+
+.cart-total strong {
+    color: #171c26;
+    font-size: 1.15rem;
+}
+
+
+.site-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 24px 4%;
+    border-top: 1px solid #e4e7ed;
+    background: #ffffff;
+}
+
+.footer-brand {
+    color: #20232b;
+    font-size: 1.2rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.footer-brand span {
+    color: #159e61;
+}
+
+.site-footer p {
+    margin: 0;
+    color: #777c88;
+    font-size: 0.82rem;
+}
+
+/* Responsive layouts */
+
+@media (max-width: 1100px) {
+    .booking-layout {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .booking-sidebar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        align-items: start;
+    }
+
+    .price-categories {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 650px) {
+    .ticketing-main {
+        width: 92%;
+        padding-top: 28px;
+    }
+
+    .event-intro,
+    .section-title {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .venue-badge {
+        align-self: flex-start;
+    }
+
+    .price-categories,
+    .booking-sidebar {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    .venue-panel,
+    .booking-card {
+        padding: 16px;
+        border-radius: 12px;
+    }
+
+    .venue-viewport {
+        padding: 12px;
+    }
+
+    .panel-heading {
+        flex-direction: column;
+    }
+
+    .site-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
