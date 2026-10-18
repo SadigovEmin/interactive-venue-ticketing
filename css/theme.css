@@ -1,0 +1,244 @@
+
+:root {
+    --main-color: #0be97a;
+    --border-color: #0be97a9d;
+    --accent-gold: #d7b879;
+    --accent-dark: #18253a;
+    --vip-color: #c6a15b;
+    --premium-color: #6688c5;
+    --standard-color: #55a58d;
+    --economy-color: #9d87c1;
+    --available-color: #e9edf3;
+    --inspected-color: #f3c969;
+    --cart-color: #55a58d;
+    --unavailable-color: #aeb5c0;
+    --page-bg: #f4f5f8;
+    --header-bg: #ffffff;
+    --surface-bg: #ffffff;
+    --surface-muted: #f8f9fb;
+    --hover-bg: #effdf5;
+
+    --text-color: #20232b;
+    --text-secondary: #777c88;
+    --text-muted: #858a96;
+
+    --border-default: #e7e9ee;
+    --border-soft: #e6e9ef;
+
+    --stage-bg: #20232b;
+    --stage-text: #0be97a;
+}
+
+body[data-theme="dark"] {
+    --page-bg: #1e1e22;
+    --header-bg: #08080a;
+    --surface-bg: #19191c;
+    --surface-muted: #242429;
+    --hover-bg: #29292e;
+
+    --text-color: #f5f5f7;
+    --text-secondary: #b0b3bd;
+    --text-muted: #a6a6af;
+
+    --border-default: #414149;
+    --border-soft: #36363d;
+
+    --stage-bg: #08080a;
+    --stage-text: #0be97a;
+}
+body {
+    background-color: var(--page-bg);
+    color: var(--text-color);
+
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.site-header,
+.site-footer {
+    background-color: var(--header-bg);
+    border-color: var(--border-default);
+    transition:
+        background-color 0.25s ease,
+        color 0.25s ease;
+}
+
+.logo-dash,
+.logo-text,
+.nav-link,
+.login-link,
+.footer-brand {
+    color: var(--text-color);
+}
+
+.nav-link,
+.login-link {
+    transition: color 0.2s ease;
+}
+
+.nav-link:hover,
+.login-link:hover {
+    color: var(--main-color);
+}
+
+.nav-search-bar {
+    background-color: var(--surface-bg);
+    border-color: var(--border-default);
+    transition:
+        background-color 0.25s ease,
+        border-color 0.2s ease;
+}
+
+.nav-search-bar:focus-within {
+    border-color: var(--border-color);
+}
+
+.nav-search-logo {
+    color: var(--text-muted);
+}
+
+.nav-search-bar:focus-within .nav-search-logo {
+    color: var(--main-color);
+}
+
+#search-input {
+    color: var(--text-color);
+}
+
+#search-input::placeholder {
+    color: var(--text-muted);
+}
+
+.theme-icon {
+    padding: 0;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+}
+
+.moon-icon {
+    display: none;
+}
+
+body[data-theme="dark"] .sun-icon {
+    display: none;
+}
+
+body[data-theme="dark"] .moon-icon {
+    display: block;
+}
+
+.language-menu summary:hover {
+    background-color: var(--hover-bg);
+}
+
+.language-options {
+    background-color: var(--surface-bg);
+    border-color: var(--border-default);
+}
+
+.language-options a {
+    color: var(--text-color);
+}
+
+.language-options a:hover {
+    background-color: var(--hover-bg);
+    color: var(--main-color);
+}
+
+.ticketing-main h2,
+.price-card h3,
+.price-card strong,
+.empty-cart p,
+.cart-total strong {
+    color: var(--text-color);
+}
+
+.muted-text,
+.event-description,
+.price-card p,
+.legend-item,
+.seat-details,
+.empty-cart,
+.site-footer p,
+#selection-message {
+    color: var(--text-secondary);
+}
+
+.eyebrow {
+    color: #159e61;
+}
+
+body[data-theme="dark"] .eyebrow {
+    color: var(--main-color);
+}
+
+.venue-badge {
+    background-color: var(--surface-muted);
+    border-color: var(--border-default);
+    color: var(--text-color);
+}
+
+.price-card,
+.venue-panel,
+.booking-card {
+    background-color: var(--surface-bg);
+    border-color: var(--border-default);
+}
+
+.seat-count-label,
+.cart-count {
+    background-color: var(--surface-muted);
+    color: var(--text-secondary);
+}
+
+.map-controls button {
+    background-color: var(--surface-bg);
+    border-color: var(--border-default);
+    color: var(--text-color);
+}
+
+.map-controls button:hover {
+    background-color: var(--hover-bg);
+    border-color: var(--main-color);
+}
+
+.venue-viewport {
+    background-color: var(--surface-muted);
+    border-color: var(--border-soft);
+}
+
+.stage {
+    background-color: var(--stage-bg);
+    color: var(--stage-text);
+}
+
+.placeholder-icon {
+    background-color: var(--hover-bg);
+    color: #159e61;
+}
+
+body[data-theme="dark"] .placeholder-icon {
+    color: var(--main-color);
+}
+
+.cart-total {
+    border-top-color: var(--border-default);
+}
+
+.site-footer {
+    border-top-color: var(--border-default);
+}
+
+.price-card,
+.venue-panel,
+.booking-card,
+.venue-viewport,
+.language-options,
+.map-controls button {
+    transition:
+        background-color 0.25s ease,
+        border-color 0.25s ease,
+        color 0.25s ease;
+}

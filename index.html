@@ -8,6 +8,7 @@
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/main.css" />
+    <link rel="stylesheet"  href="css/theme.css"/>
     <script src="js/venue-data.js" defer></script>
   </head>
   <body>
@@ -40,22 +41,38 @@
         />
       </div>
       <nav class="header-nav" aria-label="main navigations">
-        <a href="#" class="nav-link theme-icon" aria-label="Theme">
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="1.8"
-            stroke-linecap="round"
-          >
-            <circle cx="12" cy="12" r="4"></circle>
-            <path
-              d="M12 2v2 M12 20v2 M4.93 4.93l1.42 1.42
-                    M17.65 17.65l1.42 1.42 M2 12h2 M20 12h2
-                    M4.93 19.07l1.42-1.42 M17.65 6.35l1.42-1.42"
-            ></path>
-          </svg>
-        </a>
+        
+<button
+    type="button"
+    class="nav-link theme-icon"
+    id="theme-toggle"
+    aria-label="Switch to dark theme"
+>
+    <svg
+        class="sun-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+    >
+        <circle cx="12" cy="12" r="4"></circle>
+        <path d="M12 2v2 M12 20v2 M4.93 4.93l1.42 1.42 M17.65 17.65l1.42 1.42 M2 12h2 M20 12h2 M4.93 19.07l1.42-1.42 M17.65 6.35l1.42-1.42"></path>
+    </svg>
+
+    <svg
+        class="moon-icon"
+        viewBox="0 0 24 24"
+        fill="none"
+        stroke="currentColor"
+        stroke-width="1.8"
+        stroke-linecap="round"
+        stroke-linejoin="round"
+    >
+        <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
+    </svg>
+</button>
+
         
         
 
@@ -306,6 +323,7 @@
     <p>Find your seat. Make it memorable.</p>
 </footer>
 
-
+<script src="js/venue-data.js" defer></script>
+<script src="js/theme.js" ></script>
   </body>
 </html>
