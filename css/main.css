@@ -10,7 +10,7 @@
     --vip-color: #c6a15b;
     --premium-color: #6688c5;
     --standard-color: #55a58d;
-    --economy-color: #9d87c1;
+    --fan-zone-color: #9d87c1;
 
     --available-color: #e9edf3;
     --inspected-color: #f3c969;
@@ -159,8 +159,8 @@ body {
     background: var(--standard-color);
 }
 
-.economy-card .price-indicator {
-    background: var(--economy-color);
+.fan-zone-card .price-indicator {
+    background: var(--fan-zone-color);
 }
 
 .price-card h3 {
@@ -179,7 +179,6 @@ body {
     font-size: 1.15rem;
 }
 
-/* Venue and booking columns */
 
 .booking-layout {
     display: grid;
@@ -256,11 +255,6 @@ body {
     background: #f8f9fb;
 }
 
-.venue-map {
-    min-width: 520px;
-    transform-origin: center center;
-}
-
 .stage {
     display: flex;
     align-items: center;
@@ -276,10 +270,164 @@ body {
     letter-spacing: 5px;
 }
 
-.venue-sections {
+/* .venue-sections {
     display: grid;
     gap: 22px;
+} */
+ 
+
+
+.venue-sections {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 22px;
 }
+
+.venue-section--auditorium {
+    min-width: 0;
+    padding: 18px;
+    overflow-x: auto;
+    background: var(--surface-bg);
+    border: 1px solid var(--border-default);
+    border-top: 3px solid var(--main-color);
+    border-radius: 12px;
+}
+
+.venue-section--auditorium h3 {
+    margin-bottom: 5px;
+    color: var(--text-color);
+    font-size: 1rem;
+}
+
+.venue-section--auditorium > p {
+    margin-bottom: 20px;
+    color: var(--text-secondary);
+    font-size: 0.8rem;
+}
+
+.auditorium-seating {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 530px;
+    padding: 16px 0 24px;
+}
+
+.seat-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+    width: max-content;
+}
+
+.seat-block {
+    display: grid;
+    grid-template-columns: repeat(10, 22px);
+    gap: 5px 4px;
+    justify-content: center;
+}
+
+.seat-aisle {
+    flex: 0 0 42px;
+    align-self: stretch;
+}
+
+
+.venue-section--auditorium .seat {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    min-width: 22px;
+    height: 22px;
+    padding: 0;
+    border: 1px solid var(--seat-category-color, var(--standard-color));
+    border-radius: 4px;
+    background: color-mix(
+        in srgb,
+        var(--seat-category-color, var(--standard-color)) 24%,
+        var(--surface-bg)
+    );
+    color: var(--text-color);
+    font-size: 9px;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.venue-section--auditorium .seat--vip {
+    --seat-category-color: var(--vip-color);
+}
+
+.venue-section--auditorium .seat--premium {
+    --seat-category-color: var(--premium-color);
+}
+
+.venue-section--auditorium .seat--standard {
+    --seat-category-color: var(--standard-color);
+}
+
+.venue-section--auditorium .seat--fan-zone {
+    --seat-category-color: var(--fan-zone-color);
+}
+
+.venue-section--auditorium .seat[data-state="available"]:hover {
+    background: var(--seat-category-color);
+}
+
+.venue-section--auditorium .seat[data-state="inspected"] {
+    background: var(--inspected-color);
+    border: 2px solid #8a681a;
+    color: #20232b;
+}
+
+.venue-section--auditorium .seat[data-state="in-cart"] {
+    background: var(--cart-color);
+    border-color: #28795d;
+    color: #102d24;
+}
+
+.venue-section--auditorium .seat[data-state="unavailable"],
+.venue-section--auditorium .seat:disabled {
+    background: var(--unavailable-color);
+    border-color: #929aa6;
+    color: #59616d;
+    cursor: not-allowed;
+    opacity: 0.8;
+}
+
+.venue-section--auditorium .seat:focus-visible {
+    outline: 2px solid var(--main-color);
+    outline-offset: 2px;
+}
+
+@media (max-width: 650px) {
+    .venue-section--auditorium {
+        padding: 12px;
+    }
+
+    .auditorium-seating {
+        min-width: 530px;
+    }
+
+    .seat-block {
+        grid-template-columns: repeat(10, 20px);
+        gap: 4px 3px;
+    }
+
+    .seat-aisle {
+        flex-basis: 30px;
+    }
+
+    .venue-section--auditorium .seat {
+        width: 20px;
+        min-width: 20px;
+        height: 20px;
+        font-size: 8px;
+    }
+}
+
 
 .seat-legend {
     display: flex;
@@ -451,8 +599,6 @@ body {
     color: #777c88;
     font-size: 0.82rem;
 }
-
-/* Responsive layouts */
 
 @media (max-width: 1100px) {
     .booking-layout {
