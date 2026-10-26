@@ -655,3 +655,55 @@ body {
         flex-direction: column;
     }
 }
+
+
+
+
+
+.selected-seat-list {
+    display: grid;
+    gap: 10px;
+    margin-top: 14px;
+}
+
+.selected-seat-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px;
+    border: 1px solid #e7e9ee;
+    border-radius: 8px;
+    background: #f8f9fb;
+}
+
+.selected-seat-item p {
+    margin: 3px 0 0;
+    color: #777c88;
+    font-size: 0.78rem;
+}
+
+.selected-seat-item > strong {
+    white-space: nowrap;
+    font-size: 0.82rem;
+}
+
+.selected-seat-total {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    margin-top: 16px;
+    padding-top: 14px;
+    border-top: 1px solid #e7e9ee;
+    font-size: 0.9rem;
+}
+
+.selected-seat-total strong {
+    font-size: 1.05rem;
+}
+
+.venue-section--auditorium .seat[data-state="inspected"] {
+    background: var(--inspected-color);
+    border: 2px solid #8a681a;
+    color: #20232b;
+}

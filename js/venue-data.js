@@ -142,58 +142,107 @@ function generateAuditorium() {
 
 generateAuditorium();
 
+const selectedSeats = new Set();
+const MAX_SEATS = 10;
+
+function updateTicketDetails() {
+  if (!seatDetailsContainer) return;
+
+  if (selectedSeats.size === 0) {
+    seatDetailsContainer.innerHTML = `
+      <div class="selection-placeholder">
+        <div class="placeholder-icon">⌖</div>
+        <p>No seats selected</p>
+        <span>Select seats from the auditorium.</span>
+      </div>
+    `;
+  } else {
+    let total = 0;
+
+    const seatList = Array.from(selectedSeats);
+
+    seatDetailsContainer.innerHTML = `
+      <p><strong>Selected seats: ${selectedSeats.size}/${MAX_SEATS}</strong></p>
+      <div class="selected-seat-list">
+        ${seatList.map((seat) => {
+          const price = Number(seat.dataset.price);
+          total += price;
+
+          return `
+            <div class="selected-seat-item">
+              <div>
+                <strong>${seat.dataset.sectionName}</strong>
+                <p>Row ${seat.dataset.row}, Seat ${seat.dataset.seat}</p>
+              </div>
+              <strong>${price.toFixed(2)} AZN</strong>
+            </div>
+          `;
+        }).join("")}
+      </div>
+      <div class="selected-seat-total">
+        <span>Total amount</span>
+        <strong>${total.toFixed(2)} AZN</strong>
+      </div>
+    `;
+  }
+
+  if (addToCartButton) {
+    addToCartButton.disabled = selectedSeats.size === 0;
+  }
+
+  if (selectionMessage) {
+    if (selectedSeats.size === MAX_SEATS) {
+      selectionMessage.textContent =
+        "Maximum reached: you can select up to 10 seats.";
+    } else if (selectedSeats.size > 0) {
+      selectionMessage.textContent =
+        `${selectedSeats.size} seat(s) selected. ` +
+        `You can select ${MAX_SEATS - selectedSeats.size} more.`;
+    } else {
+      selectionMessage.textContent = "Choose a seat to get started.";
+    }
+  }
+}
+
+
 if (venueContainer) {
   venueContainer.addEventListener("click", (event) => {
     const seat = event.target.closest(".seat");
 
-    if (!seat || !venueContainer.contains(seat)) {
+    if (!seat || !venueContainer.contains(seat) || seat.disabled) {
       return;
     }
 
-    if (seat.disabled) {
+    if (selectedSeats.has(seat)) {
+      selectedSeats.delete(seat);
+      seat.dataset.state = "available";
+      seat.classList.remove("seat--inspected");
+
+      updateTicketDetails();
       return;
     }
 
-    if (inspectedSeat && inspectedSeat.dataset.state === "inspected") {
-      inspectedSeat.dataset.state = "available";
-      inspectedSeat.classList.remove("seat--inspected");
+
+    if (selectedSeats.size >= MAX_SEATS) {
+      if (selectionMessage) {
+        selectionMessage.textContent =
+          "You can select a maximum of 10 seats. " +
+          "Deselect a seat to choose another.";
+      }
+      return;
     }
 
-    inspectedSeat = seat;
+    selectedSeats.add(seat);
+    seat.dataset.state = "inspected";
+    seat.classList.add("seat--inspected");
 
-    const sectionName = seat.dataset.sectionName;
-    const rowNumber = seat.dataset.row;
-    const seatNumber = seat.dataset.seat;
-    const price = Number(seat.dataset.price);
-
-    if (seat.dataset.state !== "in-cart") {
-      seat.dataset.state = "inspected";
-      seat.classList.add("seat--inspected");
-    }
-
-    if (seatDetailsContainer) {
-      seatDetailsContainer.innerHTML = `
-                <div class="selected-seat-details">
-                    <p><strong>Section:</strong><span>${sectionName}</span></p>
-                    <p><strong>Row:</strong><span>${rowNumber}</span></p>
-                    <p><strong>Seat:</strong><span>${seatNumber}</span></p>
-                    <p><strong>Price:</strong><span>${price.toFixed(2)} AZN</span></p>
-                </div>
-            `;
-    }
-
-    if (addToCartButton) {
-      addToCartButton.disabled = seat.dataset.state === "in-cart";
-    }
-
-    if (selectionMessage) {
-      selectionMessage.textContent =
-        seat.dataset.state === "in-cart"
-          ? "This seat is already in your cart."
-          : "Seat inspected. Add it to your cart when ready.";
-    }
+    updateTicketDetails();
   });
 }
+
+
 if (addToCartButton) {
   addToCartButton.disabled = true;
 }
+
+updateTicketDetails();
