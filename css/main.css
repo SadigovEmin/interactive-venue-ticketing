@@ -253,6 +253,8 @@ body {
     border: 1px solid #e6e9ef;
     border-radius: 12px;
     background: #f8f9fb;
+    position: relative;
+    cursor: grab
 }
 
 .stage {
@@ -281,6 +283,10 @@ body {
     display: grid;
     grid-template-columns: minmax(0, 1fr);
     gap: 22px;
+
+    transform-origin: center center;
+    transition: transform 180ms ease;
+    will-change: transform;
 }
 
 .venue-section--auditorium {

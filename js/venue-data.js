@@ -246,3 +246,109 @@ if (addToCartButton) {
 }
 
 updateTicketDetails();
+
+
+
+
+const venueViewport = document.querySelector("#venue-viewport");
+const zoomInButton = document.querySelector("#zoom-in");
+const zoomOutButton = document.querySelector("#zoom-out");
+const moveUpButton = document.querySelector("#move-up");
+const moveDownButton = document.querySelector("#move-down");
+const moveLeftButton = document.querySelector("#move-left");
+const moveRightButton = document.querySelector("#move-right");
+const resetViewButton = document.querySelector("#reset-view");
+
+let zoomLevel = 1;
+let panX = 0;
+let panY = 0;
+
+const MIN_ZOOM = 0.7;
+const MAX_ZOOM = 4;
+const ZOOM_STEP = 0.45;
+const MOVE_STEP = 60;
+
+
+function updateVenueView() {
+  if (!venueContainer || !venueViewport) return;
+
+  const viewportWidth = venueViewport.clientWidth;
+  const viewportHeight = venueViewport.clientHeight;
+
+  const venueWidth = venueContainer.offsetWidth;
+  const venueHeight = venueContainer.offsetHeight;
+
+  const maxPanX = Math.max(
+    0,
+    (venueWidth * zoomLevel - viewportWidth) / 2
+  );
+
+  const maxPanY = Math.max(
+    0,
+    (venueHeight * zoomLevel - viewportHeight) / 2
+  );
+
+  panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
+  panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
+
+  venueContainer.style.transform =
+    `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+}
+
+
+
+
+if (zoomInButton) {
+  zoomInButton.addEventListener("click", () => {
+    zoomLevel = Math.min(MAX_ZOOM, zoomLevel + ZOOM_STEP);
+    updateVenueView();
+  });
+}
+
+if (zoomOutButton) {
+  zoomOutButton.addEventListener("click", () => {
+    zoomLevel = Math.max(MIN_ZOOM, zoomLevel - ZOOM_STEP);
+    updateVenueView();
+  });
+}
+
+if (moveUpButton) {
+  moveUpButton.addEventListener("click", () => {
+    panY += MOVE_STEP;
+    updateVenueView();
+  });
+}
+
+if (moveDownButton) {
+  moveDownButton.addEventListener("click", () => {
+    panY -= MOVE_STEP;
+    updateVenueView();
+  });
+}
+
+if (moveLeftButton) {
+  moveLeftButton.addEventListener("click", () => {
+    panX += MOVE_STEP;
+    updateVenueView();
+  });
+}
+
+if (moveRightButton) {
+  moveRightButton.addEventListener("click", () => {
+    panX -= MOVE_STEP;
+    updateVenueView();
+  });
+}
+
+if (resetViewButton) {
+  resetViewButton.addEventListener("click", () => {
+    zoomLevel = 1;
+    panX = 0;
+    panY = 0;
+
+    updateVenueView();
+  });
+}
+
+updateVenueView();
+

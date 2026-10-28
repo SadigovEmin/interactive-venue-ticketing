@@ -25,8 +25,11 @@
     --border-default: #e7e9ee;
     --border-soft: #e6e9ef;
 
+
     --stage-bg: #20232b;
     --stage-text: #0be97a;
+
+    --selected-seat-item-bg:#f8f9fb;
 }
 
 body[data-theme="dark"] {
@@ -45,6 +48,7 @@ body[data-theme="dark"] {
 
     --stage-bg: #08080a;
     --stage-text: #0be97a;
+    --selected-seat-item-bg:#00000004;
 }
 body {
     background-color: var(--page-bg);
@@ -241,4 +245,9 @@ body[data-theme="dark"] .placeholder-icon {
         background-color 0.25s ease,
         border-color 0.25s ease,
         color 0.25s ease;
+}
+.selected-seat-item{
+    border-color: var(--border-color);
+    color: var(--text-color);
+    background-color: var(--selected-seat-item-bg);
 }
