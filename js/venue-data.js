@@ -145,6 +145,11 @@ generateAuditorium();
 const selectedSeats = new Set();
 const MAX_SEATS = 10;
 
+const cartItemContainer = document.querySelector("#cart-items");
+const cartCountElement = document.querySelector("#cart-count");
+const cartTotalElement = document.querySelector("#cart-total");
+
+const cart = new Map();
 function updateTicketDetails() {
   if (!seatDetailsContainer) return;
 
@@ -164,11 +169,12 @@ function updateTicketDetails() {
     seatDetailsContainer.innerHTML = `
       <p><strong>Selected seats: ${selectedSeats.size}/${MAX_SEATS}</strong></p>
       <div class="selected-seat-list">
-        ${seatList.map((seat) => {
-          const price = Number(seat.dataset.price);
-          total += price;
+        ${seatList
+          .map((seat) => {
+            const price = Number(seat.dataset.price);
+            total += price;
 
-          return `
+            return `
             <div class="selected-seat-item">
               <div>
                 <strong>${seat.dataset.sectionName}</strong>
@@ -177,7 +183,8 @@ function updateTicketDetails() {
               <strong>${price.toFixed(2)} AZN</strong>
             </div>
           `;
-        }).join("")}
+          })
+          .join("")}
       </div>
       <div class="selected-seat-total">
         <span>Total amount</span>
@@ -191,25 +198,31 @@ function updateTicketDetails() {
   }
 
   if (selectionMessage) {
-    if (selectedSeats.size === MAX_SEATS) {
+    const remainingSeats = MAX_SEATS - cart.size - selectedSeats.size;
+
+    if (remainingSeats === 0) {
       selectionMessage.textContent =
-        "Maximum reached: you can select up to 10 seats.";
+        "Maximum reached: you can book up to 10 tickects";
     } else if (selectedSeats.size > 0) {
-      selectionMessage.textContent =
-        `${selectedSeats.size} seat(s) selected. ` +
-        `You can select ${MAX_SEATS - selectedSeats.size} more.`;
+      selectionMessage.textContent = `${selectedSeats.size} seat(s) selected. You can add ${remainingSeats} more tickect(s) to your booking.`;
+    } else if (cart.size > 0) {
+      selectionMessage.textContent = `${cart.size} ticket(s) in your cart. You can select ${remainingSeats} more.`;
     } else {
-      selectionMessage.textContent = "Choose a seat to get started.";
+      selectionMessage.textContent = `Choose a seat to get started.`;
     }
   }
 }
-
 
 if (venueContainer) {
   venueContainer.addEventListener("click", (event) => {
     const seat = event.target.closest(".seat");
 
-    if (!seat || !venueContainer.contains(seat) || seat.disabled) {
+    if (
+      !seat ||
+      !venueContainer.contains(seat) ||
+      seat.disabled ||
+      seat.dataset.state === "in-cart"
+    ) {
       return;
     }
 
@@ -222,8 +235,7 @@ if (venueContainer) {
       return;
     }
 
-
-    if (selectedSeats.size >= MAX_SEATS) {
+    if (selectedSeats.size + cart.size >= MAX_SEATS) {
       if (selectionMessage) {
         selectionMessage.textContent =
           "You can select a maximum of 10 seats. " +
@@ -240,15 +252,153 @@ if (venueContainer) {
   });
 }
 
+function updateCart() {
+  if (!cartItemContainer || !cartCountElement || !cartTotalElement) {
+    return;
+  }
+
+  cartItemContainer.replaceChildren();
+
+  let total = 0;
+
+  if (cart.size === 0) {
+    const emptyMessage = document.createElement("div");
+    emptyMessage.className = "empty-cart";
+
+    const message = document.createElement("p");
+    message.textContent = "Your cart is empty.";
+
+    const description = document.createElement("span");
+    description.textContent = "Your selected tickets will appear here.";
+
+    emptyMessage.append(message, description);
+    cartItemContainer.appendChild(emptyMessage);
+  } else {
+    cart.forEach((ticket, seatKey) => {
+      total += ticket.price;
+
+      const item = document.createElement("div");
+      item.className = "cart-item";
+
+      const details = document.createElement("div");
+      details.className = "cart-item-details";
+
+      const category = document.createElement("strong");
+      category.textContent = ticket.sectionName;
+
+      const seatInformation = document.createElement("p");
+      seatInformation.textContent = `Row ${ticket.row}, Seat ${ticket.seat}`;
+
+      details.append(category, seatInformation);
+
+      const price = document.createElement("strong");
+      price.className = "cart-item-price";
+      price.textContent = `${ticket.price.toFixed(2)} AZN`;
+
+      const removeButton = document.createElement("button");
+      removeButton.type = "button";
+      removeButton.className = "remove-ticket-button";
+      removeButton.textContent = "Remove";
+      removeButton.dataset.seatKey = seatKey;
+
+      removeButton.setAttribute(
+        "aria-label",
+        `Remove row ${ticket.row}, seat ${ticket.seat}`,
+      );
+
+      item.append(details, price, removeButton);
+      cartItemContainer.appendChild(item);
+    });
+  }
+
+  cartCountElement.textContent = `${cart.size} ${cart.size === 1 ? "ticket" : "tickets"}`;
+
+  cartTotalElement.textContent = `${total.toFixed(2)} AZN`;
+}
+
+function addSelectedSeatsToCart() {
+  if (selectedSeats.size === 0) {
+    return;
+  }
+
+  if (cart.size + selectedSeats.size > MAX_SEATS) {
+    if (selectionMessage) {
+      selectionMessage.textContent =
+        "You can add a maximum of 10 tickets to your cart.";
+    }
+    return;
+  }
+
+  selectedSeats.forEach((seat) => {
+    const seatKey = `${seat.dataset.row}-${seat.dataset.seat}`;
+
+    if (cart.has(seatKey)) {
+      return;
+    }
+
+    const ticket = {
+      section: seat.dataset.section,
+      sectionName: seat.dataset.sectionName,
+      row: Number(seat.dataset.row),
+      seat: Number(seat.dataset.seat),
+      price: Number(seat.dataset.price),
+    };
+
+    cart.set(seatKey, ticket);
+
+    seat.dataset.state = "in-cart";
+    seat.classList.remove("seat--inspected");
+    seat.classList.add("seat--in-cart");
+  });
+
+  selectedSeats.clear();
+
+  updateCart();
+  updateTicketDetails();
+}
+
+if (addToCartButton) {
+  addToCartButton.addEventListener("click", addSelectedSeatsToCart);
+}
+
+if (cartItemContainer) {
+  cartItemContainer.addEventListener("click", (event) => {
+    const removeButton = event.target.closest(".remove-ticket-button");
+
+    if (!removeButton) {
+      return;
+    }
+
+    const seatKey = removeButton.dataset.seatKey;
+    const ticket = cart.get(seatKey);
+
+    if (!ticket) {
+      return;
+    }
+
+    cart.delete(seatKey);
+
+    const seat = Array.from(venueContainer.querySelectorAll(".seat")).find(
+      (seat) =>
+        seat.dataset.row === String(ticket.row) &&
+        seat.dataset.seat === String(ticket.seat),
+    );
+
+    if (seat) {
+      seat.dataset.state = "available";
+      seat.classList.remove("seat--in-cart");
+    }
+
+    updateCart();
+    updateTicketDetails();
+  });
+}
 
 if (addToCartButton) {
   addToCartButton.disabled = true;
 }
 
 updateTicketDetails();
-
-
-
 
 const venueViewport = document.querySelector("#venue-viewport");
 const zoomInButton = document.querySelector("#zoom-in");
@@ -268,7 +418,6 @@ const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.45;
 const MOVE_STEP = 60;
 
-
 function updateVenueView() {
   if (!venueContainer || !venueViewport) return;
 
@@ -278,25 +427,15 @@ function updateVenueView() {
   const venueWidth = venueContainer.offsetWidth;
   const venueHeight = venueContainer.offsetHeight;
 
-  const maxPanX = Math.max(
-    0,
-    (venueWidth * zoomLevel - viewportWidth) / 2
-  );
+  const maxPanX = Math.max(0, (venueWidth * zoomLevel - viewportWidth) / 2);
 
-  const maxPanY = Math.max(
-    0,
-    (venueHeight * zoomLevel - viewportHeight) / 2
-  );
+  const maxPanY = Math.max(0, (venueHeight * zoomLevel - viewportHeight) / 2);
 
   panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
   panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
 
-  venueContainer.style.transform =
-    `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+  venueContainer.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
 }
-
-
-
 
 if (zoomInButton) {
   zoomInButton.addEventListener("click", () => {
@@ -351,4 +490,4 @@ if (resetViewButton) {
 }
 
 updateVenueView();
-
+updateCart();

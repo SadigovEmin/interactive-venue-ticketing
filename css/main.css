@@ -713,3 +713,39 @@ body {
     border: 2px solid #8a681a;
     color: #20232b;
 }
+
+.cart-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px;
+  margin-bottom: 10px;
+  border: 1px solid ;
+  border-radius: 8px;
+  
+}
+
+.cart-item-details p {
+  margin: 4px 0 0;
+  color: #777c88;
+  font-size: 0.78rem;
+}
+
+.cart-item-price {
+  font-size: 0.82rem;
+  white-space: nowrap;
+}
+
+.remove-ticket-button {
+  padding: 6px 9px;
+  border: 1px solid #e4b7b7;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.remove-ticket-button:hover {
+  background: #ffe5e5;
+}

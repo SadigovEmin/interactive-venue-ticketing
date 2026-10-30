@@ -30,8 +30,11 @@
     --stage-text: #0be97a;
 
     --selected-seat-item-bg:#f8f9fb;
-}
 
+    --remove-button-bg: #fff5f5;
+    --remove-button-p: #b33a3a;
+    --cart-item-border-bg:#e7e9ee;
+}
 body[data-theme="dark"] {
     --page-bg: #1e1e22;
     --header-bg: #08080a;
@@ -49,6 +52,9 @@ body[data-theme="dark"] {
     --stage-bg: #08080a;
     --stage-text: #0be97a;
     --selected-seat-item-bg:#00000004;
+    --remove-button-bg: #db1e1ebb;
+    --remove-button-p: #f5f5f7;
+    --cart-item-border-bg: #5a4e4ed4;
 }
 body {
     background-color: var(--page-bg);
@@ -250,4 +256,19 @@ body[data-theme="dark"] .placeholder-icon {
     border-color: var(--border-color);
     color: var(--text-color);
     background-color: var(--selected-seat-item-bg);
+}
+
+.cart-item{
+    background-color: var(--selected-seat-item-bg);
+    color: var(--text-color);
+    border:1px solid var(--cart-item-border-bg);
+
+}
+
+.remove-ticket-button {
+    background-color: var(--remove-button-bg);
+    color: var(--remove-button-p);
+}
+.remove-ticket-button:hover {
+   color: #08080a;
 }
