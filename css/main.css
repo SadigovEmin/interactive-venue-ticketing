@@ -540,6 +540,20 @@ body {
     font-size: 0.8rem;
 }
 
+.selected-seat-list{
+    max-height: 13rem;
+    overflow-y:auto;
+    scrollbar-width: thin;
+    scrollbar-color: #55a58d transparent;
+}
+
+#cart-items{
+    max-height: 15rem;
+    overflow-y:auto;
+    scrollbar-width: thin;
+    scrollbar-color: #55a58d transparent;
+    
+}
 .cart-heading {
     margin-bottom: 18px;
 }

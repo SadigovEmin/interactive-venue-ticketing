@@ -143,13 +143,59 @@ function generateAuditorium() {
 generateAuditorium();
 
 const selectedSeats = new Set();
-const MAX_SEATS = 10;
+const MAX_SEATS = 5;
 
 const cartItemContainer = document.querySelector("#cart-items");
 const cartCountElement = document.querySelector("#cart-count");
 const cartTotalElement = document.querySelector("#cart-total");
 
 const cart = new Map();
+
+const CART_STORAGE_KEY = "eTicketCart";
+const CART_EXPIRATION_TIME = 10 * 60 * 1000; // converting 10 minutes to milliseconds
+
+function saveCart(){
+  const cartData = {
+    items: Array.from(cart.entries()),
+    savedAt: Date.now(),
+  };
+  
+  localStorage.setItem(
+    CART_STORAGE_KEY,
+    JSON.stringify(cartData)
+  );
+}
+
+function loadCart() {
+  const savedData = localStorage.getItem(CART_STORAGE_KEY);
+
+  if(!savedData){return;}
+
+  const cartData = JSON.parse(savedData);
+
+  const currentTime = Date.now();
+  const elapsedTime = currentTime - cartData.savedAt;
+
+  if(elapsedTime >= CART_EXPIRATION_TIME){
+    localStorage.removeItem(CART_STORAGE_KEY);
+    return;
+  }
+
+  cartData.items.forEach(([seatKey, ticket]) => {
+    cart.set(seatKey, ticket);
+
+    const seat = venueContainer.querySelector(
+      `[data-row="${ticket.row}"][data-seat="${ticket.seat}"]`
+    );
+
+    if(seat){
+      seat.dataset.state = "in-cart";
+      seat.classList.remove("seat--inspected");
+      seat.classList.add("seat--in-cart");
+    }
+  });
+}
+
 function updateTicketDetails() {
   if (!seatDetailsContainer) return;
 
@@ -202,7 +248,7 @@ function updateTicketDetails() {
 
     if (remainingSeats === 0) {
       selectionMessage.textContent =
-        "Maximum reached: you can book up to 10 tickects";
+        `Maximum reached: you can book up to ${MAX_SEATS} tickects`;
     } else if (selectedSeats.size > 0) {
       selectionMessage.textContent = `${selectedSeats.size} seat(s) selected. You can add ${remainingSeats} more tickect(s) to your booking.`;
     } else if (cart.size > 0) {
@@ -238,7 +284,7 @@ if (venueContainer) {
     if (selectedSeats.size + cart.size >= MAX_SEATS) {
       if (selectionMessage) {
         selectionMessage.textContent =
-          "You can select a maximum of 10 seats. " +
+          `You can select a maximum of ${MAX_SEATS} seats. ` +
           "Deselect a seat to choose another.";
       }
       return;
@@ -324,7 +370,7 @@ function addSelectedSeatsToCart() {
   if (cart.size + selectedSeats.size > MAX_SEATS) {
     if (selectionMessage) {
       selectionMessage.textContent =
-        "You can add a maximum of 10 tickets to your cart.";
+        `You can add a maximum of ${MAX_SEATS} ticket(s) to your cart.`;
     }
     return;
   }
@@ -353,6 +399,7 @@ function addSelectedSeatsToCart() {
 
   selectedSeats.clear();
 
+  saveCart();
   updateCart();
   updateTicketDetails();
 }
@@ -377,6 +424,7 @@ if (cartItemContainer) {
     }
 
     cart.delete(seatKey);
+    saveCart(); // update localStroage; adding and removing
 
     const seat = Array.from(venueContainer.querySelectorAll(".seat")).find(
       (seat) =>
@@ -489,5 +537,7 @@ if (resetViewButton) {
   });
 }
 
-updateVenueView();
-updateCart();
+loadCart(); // this will restore the saved tickets and their seats
+updateVenueView(); // this will initialize the venue
+updateCart();  // this will display restored tickets
+updateTicketDetails(); // this will refresh the selection information
