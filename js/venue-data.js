@@ -135,7 +135,8 @@ function generateAuditorium() {
     seatingArea.appendChild(row);
   });
 
-  auditorium.append(heading, description, stage, seatingArea);
+  seatingArea.prepend(stage);
+  auditorium.append(heading, description,seatingArea);
 
   venueContainer.replaceChildren(auditorium);
 }
@@ -461,7 +462,7 @@ let zoomLevel = 1;
 let panX = 0;
 let panY = 0;
 
-const MIN_ZOOM = 0.7;
+const MIN_ZOOM = 0.35;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.45;
 const MOVE_STEP = 60;
@@ -469,20 +470,34 @@ const MOVE_STEP = 60;
 function updateVenueView() {
   if (!venueContainer || !venueViewport) return;
 
-  const viewportWidth = venueViewport.clientWidth;
-  const viewportHeight = venueViewport.clientHeight;
+  const viewportWidth =
+    venueViewport.clientWidth -
+    parseFloat(getComputedStyle(venueViewport).paddingLeft) -
+    parseFloat(getComputedStyle(venueViewport).paddingRight);
+
+  const viewportHeight =
+    venueViewport.clientHeight -
+    parseFloat(getComputedStyle(venueViewport).paddingTop) -
+    parseFloat(getComputedStyle(venueViewport).paddingBottom);
 
   const venueWidth = venueContainer.offsetWidth;
   const venueHeight = venueContainer.offsetHeight;
 
-  const maxPanX = Math.max(0, (venueWidth * zoomLevel - viewportWidth) / 2);
+  const maxPanX = Math.max(
+    0,
+    (venueWidth * zoomLevel - viewportWidth) / 2
+  );
 
-  const maxPanY = Math.max(0, (venueHeight * zoomLevel - viewportHeight) / 2);
+  const maxPanY = Math.max(
+    0,
+    (venueHeight * zoomLevel - viewportHeight) / 2
+  );
 
   panX = Math.max(-maxPanX, Math.min(maxPanX, panX));
   panY = Math.max(-maxPanY, Math.min(maxPanY, panY));
 
-  venueContainer.style.transform = `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
+  venueContainer.style.transform =
+    `translate(${panX}px, ${panY}px) scale(${zoomLevel})`;
 }
 
 if (zoomInButton) {
