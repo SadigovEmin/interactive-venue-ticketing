@@ -194,7 +194,7 @@ body {
 }
 
 .language-menu img{
-    width: 2.7rem;
+    width: 2rem;
 }
 
 .language-menu summary {
@@ -270,7 +270,7 @@ body {
 }
 
 
-@media (max-width: 650px) {
+@media (max-width: 798px) {
 
     .logo-text {
         font-size: 23px;

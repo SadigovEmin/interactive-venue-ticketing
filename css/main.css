@@ -258,6 +258,11 @@ body {
         scrollbar-width: thin;
     scrollbar-color: #55a58d transparent;
 }
+#venue-sections,
+#venue-sections * {
+    -webkit-user-select: none;
+    user-select: none;
+}
 
 .stage {
     display: flex;

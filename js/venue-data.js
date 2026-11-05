@@ -12,7 +12,6 @@ const seatDetailsContainer = document.querySelector("#seat-details");
 const addToCartButton = document.querySelector("#add-to-cart");
 const selectionMessage = document.querySelector("#selection-message");
 
-let inspectedSeat = null;
 
 function generateAuditorium() {
   if (!venueContainer) {
@@ -103,6 +102,7 @@ function generateAuditorium() {
       button.type = "button";
       button.className = `seat seat--${seatData.category.id}`;
       button.textContent = seatNumber;
+      button.setAttribute("draggable","false");
 
       button.dataset.section = seatData.category.id;
       button.dataset.sectionName = seatData.category.name;
@@ -462,7 +462,7 @@ let zoomLevel = 1;
 let panX = 0;
 let panY = 0;
 
-const MIN_ZOOM = 0.35;
+const MIN_ZOOM = 0.85;
 const MAX_ZOOM = 4;
 const ZOOM_STEP = 0.45;
 const MOVE_STEP = 60;
@@ -550,6 +550,90 @@ if (resetViewButton) {
 
     updateVenueView();
   });
+}
+
+if (venueViewport && venueContainer) {
+  venueViewport.addEventListener(
+    "wheel",
+    (event) => {
+      event.preventDefault();
+
+      const oldZoom = zoomLevel;
+
+      const newZoom =
+        event.deltaY < 0
+          ? Math.min(MAX_ZOOM, zoomLevel + ZOOM_STEP)
+          : Math.max(MIN_ZOOM, zoomLevel - ZOOM_STEP);
+
+      const rect = venueContainer.getBoundingClientRect();
+
+      const centerX = rect.left + venueContainer.offsetWidth * oldZoom / 2;
+      const centerY = rect.top + venueContainer.offsetHeight * oldZoom / 2;
+
+      const mouseFromCenterX = event.clientX - centerX;
+      const mouseFromCenterY = event.clientY - centerY;
+
+      panX += mouseFromCenterX * (1 - newZoom / oldZoom);
+      panY += mouseFromCenterY * (1 - newZoom / oldZoom);
+
+      zoomLevel = newZoom;
+
+      updateVenueView();
+    },
+    { passive: false }
+  );
+}
+
+let isDragging = false;
+let dragStartX = 0;
+let dragStartY = 0;
+let dragStartPanX = 0;
+let dragStartPanY = 0;
+
+if (venueViewport) {
+  venueViewport.addEventListener("pointerdown", (event) => {
+    
+    if (event.pointerType !== "mouse" || event.button !== 0) {
+      return;
+    }
+
+    isDragging = true;
+
+    dragStartX = event.clientX;
+    dragStartY = event.clientY;
+
+    dragStartPanX = panX;
+    dragStartPanY = panY;
+
+    event.preventDefault();
+  });
+
+  venueViewport.addEventListener("pointermove", (event) => {
+    if (!isDragging) return;
+
+    const moveX = event.clientX - dragStartX;
+    const moveY = event.clientY - dragStartY;
+
+  
+    if (Math.abs(moveX) < 4 && Math.abs(moveY) < 4) {
+      return;
+    }
+
+    panX = dragStartPanX + moveX;
+    panY = dragStartPanY + moveY;
+
+    venueViewport.style.cursor = "grabbing";
+
+    updateVenueView();
+  });
+
+  function stopDragging() {
+    isDragging = false;
+    venueViewport.style.cursor = "grab";
+  }
+
+  venueViewport.addEventListener("pointerup", stopDragging);
+  venueViewport.addEventListener("pointercancel", stopDragging);
 }
 
 loadCart(); // this will restore the saved tickets and their seats
