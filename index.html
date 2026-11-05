@@ -4,12 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>E-Ticket | Ticketing</title>
-    <link rel="icon" type="image/x-icon" href="./assets/et-favicon.png">
+    <link rel="icon" type="image/x-icon" href="./assets/et-favicon.png" />
 
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/main.css" />
-    <link rel="stylesheet"  href="css/theme.css"/>
+    <link rel="stylesheet" href="css/theme.css" />
     <script src="js/venue-data.js" defer></script>
+    <script defer src="js/theme.js"></script>
   </head>
   <body>
     <header class="site-header">
@@ -41,64 +42,67 @@
         />
       </div>
       <nav class="header-nav" aria-label="main navigations">
-        
-<button
-    type="button"
-    class="nav-link theme-icon"
-    id="theme-toggle"
-    aria-label="Switch to dark theme"
->
-    <svg
-        class="sun-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-    >
-        <circle cx="12" cy="12" r="4"></circle>
-        <path d="M12 2v2 M12 20v2 M4.93 4.93l1.42 1.42 M17.65 17.65l1.42 1.42 M2 12h2 M20 12h2 M4.93 19.07l1.42-1.42 M17.65 6.35l1.42-1.42"></path>
-    </svg>
+        <button
+          type="button"
+          class="nav-link theme-icon"
+          id="theme-toggle"
+          aria-label="Switch to dark theme"
+        >
+          <svg
+            class="sun-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+          >
+            <circle cx="12" cy="12" r="4"></circle>
+            <path
+              d="M12 2v2 M12 20v2 M4.93 4.93l1.42 1.42 M17.65 17.65l1.42 1.42 M2 12h2 M20 12h2 M4.93 19.07l1.42-1.42 M17.65 6.35l1.42-1.42"
+            ></path>
+          </svg>
 
-    <svg
-        class="moon-icon"
-        viewBox="0 0 24 24"
-        fill="none"
-        stroke="currentColor"
-        stroke-width="1.8"
-        stroke-linecap="round"
-        stroke-linejoin="round"
-    >
-        <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
-    </svg>
-</button>
+          <svg
+            class="moon-icon"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="1.8"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M20.9 13A9 9 0 0 1 11 3.1 9 9 0 1 0 20.9 13Z"></path>
+          </svg>
+        </button>
 
-        
-        
+        <details class="language-menu">
+          <summary aria-label="Choose language">
+            <img src="assets/flags/united_kingdom_round_icon_64.png" />
+          </summary>
 
-<details class="language-menu">
-    <summary aria-label="Choose language">
-        <img src="assets/flags/united_kingdom_round_icon_64.png">
-    </summary>
+          <div class="language-options">
+            <a href="?lang=en" lang="en">
+              <span class="language-flag"
+                ><img src="assets/flags/united_kingdom_round_icon_64.png"
+              /></span>
+              <span>English</span>
+            </a>
 
-    <div class="language-options">
-        <a href="?lang=en" lang="en">
-            <span class="language-flag"><img src="assets/flags/united_kingdom_round_icon_64.png"></span>
-            <span>English</span>
-        </a>
+            <a href="?lang=az" lang="az">
+              <span class="language-flag"
+                ><img src="assets/flags/azerbaijan_round_icon_64.png"
+              /></span>
+              <span>Azərbaycanca</span>
+            </a>
 
-        <a href="?lang=az" lang="az">
-            <span class="language-flag"><img src="assets/flags/azerbaijan_round_icon_64.png"></span>
-            <span>Azərbaycanca</span>
-        </a>
-
-        <a href="?lang=ru" lang="ru">
-            <span class="language-flag"><img src="assets/flags/russia_round_icon_64.png"></span>
-            <span>Русский</span>
-        </a>
-    </div>
-</details>
-
+            <a href="?lang=ru" lang="ru">
+              <span class="language-flag"
+                ><img src="assets/flags/russia_round_icon_64.png"
+              /></span>
+              <span>Русский</span>
+            </a>
+          </div>
+        </details>
 
         <a href="#" class="nav-link" aria-label="Notifications">
           <svg
@@ -114,7 +118,12 @@
           </svg>
         </a>
 
-        <a href="#" class="nav-link" aria-label="Shopping card">
+        <a
+          href="#"
+          class="nav-link"
+          aria-label="Shopping card"
+          id="nav-cart-btn"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -127,6 +136,9 @@
             <circle cx="19" cy="21" r="1"></circle>
             <path d="M1 2h3l3.2 14h12.5L23 6H5"></path>
           </svg>
+          <span id="nav-cart-badge" class="cart-badge" style="display: none"
+            >0</span
+          >
         </a>
         <a href="#" class="login-link">
           <svg
@@ -145,180 +157,189 @@
       </nav>
     </header>
 
-    
-<main class="ticketing-main">
-    <section class="event-intro" aria-labelledby="event-title">
+    <main class="ticketing-main">
+      <section class="event-intro" aria-labelledby="event-title">
         <div>
-            <p class="eyebrow">TICKETS COME TO YOUR DOOR NOW</p>
-            <h1 id="event-title">Emin's Talks</h1>
-            <p class="event-description">
-                Find your perfect seat and book your tickets.
-            </p>
+          <p class="eyebrow">TICKETS COME TO YOUR DOOR NOW</p>
+          <h1 id="event-title">Emin's Talks</h1>
+          <p class="event-description">
+            Find your perfect seat and book your tickets.
+          </p>
         </div>
 
         <div class="venue-badge">
-            <span class="status-dot"></span>
-            Seat selection
+          <span class="status-dot"></span>
+          Seat selection
         </div>
-    </section>
+      </section>
 
-    <section class="pricing-section" aria-labelledby="pricing-title">
+      <section class="pricing-section" aria-labelledby="pricing-title">
         <div class="section-title">
-            <div>
-                <p class="eyebrow">CHOOSE YOUR SEAT</p>
-                <h2 id="pricing-title">Seat categories</h2>
-            </div>
-            <p class="muted-text">Prices are per ticket</p>
+          <div>
+            <p class="eyebrow">CHOOSE YOUR SEAT</p>
+            <h2 id="pricing-title">Seat categories</h2>
+          </div>
+          <p class="muted-text">Prices are per ticket</p>
         </div>
 
         <div class="price-categories">
-            <article class="price-card vip-card">
-                <span class="price-indicator"></span>
-                <div>
-                    <h3>VIP</h3>
-                    <p>Exclusive front-row seating</p>
-                </div>
-                <strong>120 AZN</strong>
-            </article>
+          <article class="price-card vip-card">
+            <span class="price-indicator"></span>
+            <div>
+              <h3>VIP</h3>
+              <p>Exclusive front-row seating</p>
+            </div>
+            <strong>120 AZN</strong>
+          </article>
 
-            <article class="price-card premium-card">
-                <span class="price-indicator"></span>
-                <div>
-                    <h3>Premium</h3>
-                    <p>Excellent stage views</p>
-                </div>
-                <strong>85 AZN</strong>
-            </article>
+          <article class="price-card premium-card">
+            <span class="price-indicator"></span>
+            <div>
+              <h3>Premium</h3>
+              <p>Excellent stage views</p>
+            </div>
+            <strong>85 AZN</strong>
+          </article>
 
-            <article class="price-card standard-card">
-                <span class="price-indicator"></span>
-                <div>
-                    <h3>Standard</h3>
-                    <p>Comfortable central seating</p>
-                </div>
-                <strong>55 AZN</strong>
-            </article>
+          <article class="price-card standard-card">
+            <span class="price-indicator"></span>
+            <div>
+              <h3>Standard</h3>
+              <p>Comfortable central seating</p>
+            </div>
+            <strong>55 AZN</strong>
+          </article>
 
-            <article class="price-card fan-zone-card">
-                <span class="price-indicator"></span>
-                <div>
-                    <h3>Fan Zone</h3>
-                    <p>Affordable seating options</p>
-                </div>
-                <strong>30 AZN</strong>
-            </article>
+          <article class="price-card fan-zone-card">
+            <span class="price-indicator"></span>
+            <div>
+              <h3>Fan Zone</h3>
+              <p>Affordable seating options</p>
+            </div>
+            <strong>30 AZN</strong>
+          </article>
         </div>
-    </section>
+      </section>
 
-    <div class="booking-layout">
-
+      <div class="booking-layout">
         <section class="venue-panel" aria-labelledby="map-title">
-            <div class="panel-heading">
-                <div>
-                    <p class="eyebrow">EXPLORE THE VENUE</p>
-                    <h2 id="map-title">Select your seats</h2>
-                    <p class="muted-text">
-                        Select a seat to view its row, number and price.
-                    </p>
-                </div>
-                <span class="seat-count-label">264 seats</span>
+          <div class="panel-heading">
+            <div>
+              <p class="eyebrow">EXPLORE THE VENUE</p>
+              <h2 id="map-title">Select your seats</h2>
+              <p class="muted-text">
+                Select a seat to view its row, number and price.
+              </p>
             </div>
+            <span class="seat-count-label">264 seats</span>
+          </div>
 
-            <div class="map-controls" aria-label="Map navigation">
-                <button type="button" id="zoom-in">Zoom +</button>
-                <button type="button" id="zoom-out">Zoom −</button>
-                <button type="button" id="move-up">↑</button>
-                <button type="button" id="move-down">↓</button>
-                <button type="button" id="move-left">←</button>
-                <button type="button" id="move-right">→</button>
-                <button type="button" id="reset-view">Reset view</button>
+          <div class="map-controls" aria-label="Map navigation">
+            <button type="button" id="zoom-in">Zoom +</button>
+            <button type="button" id="zoom-out">Zoom −</button>
+            <button type="button" id="move-up">↑</button>
+            <button type="button" id="move-down">↓</button>
+            <button type="button" id="move-left">←</button>
+            <button type="button" id="move-right">→</button>
+            <button type="button" id="reset-view">Reset view</button>
+          </div>
+
+          <div class="venue-viewport" id="venue-viewport">
+            <div class="venue-sections" id="venue-sections">
+              <!-- JavaScript will generate the sections and seats here. -->
             </div>
+          </div>
 
-            <div class="venue-viewport" id="venue-viewport">
-                    <div class="venue-sections" id="venue-sections">
-                        
-                        <!-- JavaScript will generate the sections and seats here. -->
-                    </div>
+          <div class="seat-legend" aria-label="Seat status">
+            <span class="legend-item">
+              <span class="legend-swatch inspected"></span>
+              Selected for inspection
+            </span>
 
-                
-            </div>
+            <span class="legend-item">
+              <span class="legend-swatch in-cart"></span>
+              In cart
+            </span>
 
-            <div class="seat-legend" aria-label="Seat status">
-                <span class="legend-item">
-                    <span class="legend-swatch available"></span>
-                    Available
-                </span>
-
-                <span class="legend-item">
-                    <span class="legend-swatch inspected"></span>
-                    Selected for inspection
-                </span>
-
-                <span class="legend-item">
-                    <span class="legend-swatch in-cart"></span>
-                    In cart
-                </span>
-
-                <span class="legend-item">
-                    <span class="legend-swatch unavailable"></span>
-                    Unavailable
-                </span>
-            </div>
+            <span class="legend-item">
+              <span class="legend-swatch unavailable"></span>
+              Unavailable
+            </span>
+          </div>
         </section>
 
         <aside class="booking-sidebar">
+          <section class="booking-card" aria-labelledby="seat-details-title">
+            <p class="eyebrow">YOUR SELECTION</p>
+            <h2 id="seat-details-title">Seat details</h2>
 
-            <section class="booking-card" aria-labelledby="seat-details-title">
-                <p class="eyebrow">YOUR SELECTION</p>
-                <h2 id="seat-details-title">Seat details</h2>
+            <div id="seat-details" class="seat-details">
+              <div class="selection-placeholder">
+                <span class="placeholder-icon">⌖</span>
+                <p>Select a seat on the map to see its details.</p>
+              </div>
+            </div>
 
-                <div id="seat-details" class="seat-details">
-                    <div class="selection-placeholder">
-                        <span class="placeholder-icon">⌖</span>
-                        <p>Select a seat on the map to see its details.</p>
-                    </div>
-                </div>
+            <button type="button" id="add-to-cart" disabled>ADD TO CART</button>
 
-                <button type="button" id="add-to-cart" disabled>
-                    ADD TO CART
-                </button>
+            <p id="selection-message" role="status" aria-live="polite"></p>
+          </section>
 
-                <p id="selection-message" role="status" aria-live="polite"></p>
-            </section>
+          <section class="booking-card cart-card" aria-labelledby="cart-title">
+            <div class="cart-heading">
+              <div>
+                <p class="eyebrow">READY WHEN YOU ARE</p>
+                <h2 id="cart-title">Your tickets</h2>
+              </div>
 
-            <section class="booking-card cart-card" aria-labelledby="cart-title">
-                <div class="cart-heading">
-                    <div>
-                        <p class="eyebrow">READY WHEN YOU ARE</p>
-                        <h2 id="cart-title">Your tickets</h2>
-                    </div>
+              <span id="cart-count" class="cart-count">0 tickets</span>
+            </div>
 
-                    <span id="cart-count" class="cart-count">0 tickets</span>
-                </div>
+            <div id="cart-items">
+              <div class="empty-cart">
+                <p>Your cart is empty.</p>
+                <span>Your selected tickets will appear here.</span>
+              </div>
+            </div>
 
-                <div id="cart-items">
-                    <div class="empty-cart">
-                        <p>Your cart is empty.</p>
-                        <span>Your selected tickets will appear here.</span>
-                    </div>
-                </div>
-
-                <div class="cart-total">
-                    <span>Total amount</span>
-                    <strong id="cart-total">0.00 AZN</strong>
-                </div>
-            </section>
-
+            <div class="cart-total">
+              <span>Total amount</span>
+              <strong id="cart-total">0.00 AZN</strong>
+            </div>
+          </section>
         </aside>
+      </div>
+    </main>
+
+    <div id="cart-modal-overlay" class="modal-overlay" style="display: none;">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2>Order Summary</h2>
+          <button type="button" id="close-modal-btn" aria-label="Close modal">
+            &times;
+          </button>
+        </div>
+
+        <div id="modal-cart-items">
+          <!-- Cart items will be dynamically copied here -->
+        </div>
+
+        <div class="modal-footer">
+          <div class="modal-total-section">
+            <span>Total amount</span>
+            <strong id="modal-cart-total">0.00 AZN</strong>
+          </div>
+          <button type="button" id="confirm-order-btn" disabled>
+            Confirm your order
+          </button>
+        </div>
+      </div>
     </div>
-</main>
 
-<footer class="site-footer">
-    <a href="#" class="footer-brand">E-<span>ticket</span></a>
-    <p>Find your seat. Make it memorable.</p>
-    <p>© Emin Sadigov | All Rights Reserved</p>
-</footer>
-
-<script src="js/theme.js" ></script>
+    <footer class="site-footer">
+      <a href="#" class="footer-brand">E-<span>ticket</span></a>
+      <p>Find your seat. Make it memorable.</p>
+      <p>© Emin Sadigov | All Rights Reserved</p>
+    </footer>
   </body>
 </html>

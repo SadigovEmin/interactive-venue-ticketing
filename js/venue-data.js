@@ -12,6 +12,14 @@ const seatDetailsContainer = document.querySelector("#seat-details");
 const addToCartButton = document.querySelector("#add-to-cart");
 const selectionMessage = document.querySelector("#selection-message");
 
+const navCartBtn = document.querySelector("#nav-cart-btn");
+const navCartBadge = document.querySelector("#nav-cart-badge");
+const cartModalOverlay = document.querySelector("#cart-modal-overlay");
+const closeModalBtn = document.querySelector("#close-modal-btn");
+const modalCartItems = document.querySelector("#modal-cart-items");
+const modalCartTotal = document.querySelector("#modal-cart-total");
+const confirmOrderBtn = document.querySelector("#confirm-order-btn");
+
 
 function generateAuditorium() {
   if (!venueContainer) {
@@ -361,6 +369,23 @@ function updateCart() {
   cartCountElement.textContent = `${cart.size} ${cart.size === 1 ? "ticket" : "tickets"}`;
 
   cartTotalElement.textContent = `${total.toFixed(2)} AZN`;
+ //related to modal
+  if (navCartBadge) {
+    if (cart.size > 0) {
+      navCartBadge.textContent = cart.size;
+      navCartBadge.style.display = "flex";
+    } else {
+      navCartBadge.style.display = "none";
+    }
+  }
+ 
+  if (modalCartItems && modalCartTotal) {
+    modalCartItems.innerHTML = cartItemContainer.innerHTML;
+    modalCartTotal.textContent = `${total.toFixed(2)} AZN`;
+  }
+  if (confirmOrderBtn) {
+    confirmOrderBtn.disabled = cart.size === 0;
+  }
 }
 
 function addSelectedSeatsToCart() {
@@ -640,3 +665,62 @@ loadCart(); // this will restore the saved tickets and their seats
 updateVenueView(); // this will initialize the venue
 updateCart();  // this will display restored tickets
 updateTicketDetails(); // this will refresh the selection information
+
+// this will open modal
+if (navCartBtn) {
+  navCartBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    cartModalOverlay.style.display = "flex";
+  });
+}
+
+//this will close modal via Button
+if (closeModalBtn) {
+  closeModalBtn.addEventListener("click", () => {
+    cartModalOverlay.style.display = "none";
+  });
+}
+
+// this will close Modal via clicking outside the box
+if (cartModalOverlay) {
+  cartModalOverlay.addEventListener("click", (e) => {
+    if (e.target === cartModalOverlay) {
+      cartModalOverlay.style.display = "none";
+    }
+  });
+}
+
+// this will handle Remove buttons inside the Modal dynamically
+if (modalCartItems) {
+  modalCartItems.addEventListener("click", (event) => {
+    const removeButton = event.target.closest(".remove-ticket-button");
+    if (!removeButton) return;
+
+    const seatKey = removeButton.dataset.seatKey;
+    const ticket = cart.get(seatKey);
+    if (!ticket) return;
+
+    cart.delete(seatKey);
+    saveCart();
+
+    const seat = Array.from(venueContainer.querySelectorAll(".seat")).find(
+      (s) => s.dataset.row === String(ticket.row) && s.dataset.seat === String(ticket.seat)
+    );
+
+    if (seat) {
+      seat.dataset.state = "available";
+      seat.classList.remove("seat--in-cart");
+    }
+
+    updateCart();
+    updateTicketDetails();
+  });
+}
+
+if (confirmOrderBtn) {
+  confirmOrderBtn.addEventListener("click", () => {
+    if (cart.size === 0) return;
+    cartModalOverlay.style.display = "none";
+    alert("This service is not available. Thanks for your understanding! 😊");
+  });
+}
